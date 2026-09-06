@@ -1,148 +1,187 @@
-import { Application } from "../models/application.js";
-import { Job } from "../models/jobmodel.js";
+import prisma from "../utils/prisma.js";
+import { formatApplication, formatJob } from "../utils/format.js";
 
-
+// apply for a job
 export const applyJob = async (req, res) => {
     try {
         const userId = req.id;
         const jobId = req.params.id;
-        // const {id:jobId}= req.params;
-        if (!jobId) {
-            return res.status(400).json(
-                {
-                    message: "Job id is required",
-                    success: false
-                })
 
+        if (!jobId) {
+            return res.status(400).json({
+                message: "Job id is required",
+                success: false
+            });
         }
-        // check if the user has already applied for the job
-        const existingApplication = await Application.findOne({ job: jobId, applicant: userId })
+
+        // check if user already applied
+        const existingApplication = await prisma.application.findFirst({
+            where: {
+                jobId,
+                applicantId: userId
+            }
+        });
+
         if (existingApplication) {
             return res.status(400).json({
                 message: "You have already applied for this job",
                 success: false
-            })
+            });
         }
-        //check if jobs not exist
-        const job = await Job.findById(jobId)
+
+        // check if job exists
+        const job = await prisma.job.findUnique({
+            where: { id: jobId }
+        });
+
         if (!job) {
             return res.status(404).json({
                 message: "Job not found",
                 success: false
-
-            })
+            });
         }
-        //create a new application
-        const newApplication = await Application.create({
-            job: jobId,
-            applicant: userId
 
+        // create new application
+        const newApplication = await prisma.application.create({
+            data: {
+                jobId,
+                applicantId: userId
+            }
         });
-        //save the application
-        // push the applied user id and infromation in applications arrya in job model
-        job.applications.push(newApplication._id);
-        await job.save();
-        return res.status(201).json({
-            message:"job applied successfully",
-            success: true
-        })
-    }
-    catch (error) {
-        console.log(error);
 
+        return res.status(201).json({
+            message: "Job applied successfully.",
+            application: formatApplication(newApplication),
+            success: true
+        });
+    } catch (error) {
+        console.error("Apply Job Error:", error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false
+        });
     }
 };
 
-// get the all applied  job
- export const getAppliedJobs = async (req, res) => {
-try {
-    const userId = req.id;
-    // find the job where applicant applied and sort the accending order
-    const application = await Application.find({applicant:userId}).sort({createdAt:-1}).populate({
-        path: 'job',
-        options:{sort:{createdAt:-1}},
-        populate:{
-            path:'company',
-            options:{sort:{createdAt:-1}},
-        }
-    });
-    if (!application) {
-        return res.status(404).json({
-            message: "No job applied",
-            success: false
-        })
-    }
-    return res.status(200).json({
-        application,
-        success: true
-    })
-} 
-catch (error) {
-console.log(error);
-    
-}
-}
+// get all jobs applied by the logged-in student
+export const getAppliedJobs = async (req, res) => {
+    try {
+        const userId = req.id;
+        const applications = await prisma.application.findMany({
+            where: { applicantId: userId },
+            include: {
+                job: {
+                    include: {
+                        company: true
+                    }
+                }
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
 
-// get the applicants
-// admin check the how many user applied in one job
-export const getApplicants = async (req,res)=>{
+        return res.status(200).json({
+            application: applications.map(formatApplication),
+            success: true
+        });
+    } catch (error) {
+        console.error("Get Applied Jobs Error:", error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false
+        });
+    }
+};
+
+// get applicants for a specific job (admin / recruiter)
+export const getApplicants = async (req, res) => {
     try {
         const jobId = req.params.id;
-        const job = await Job.findById(jobId).populate({
-            path: 'applications',
-            options:{sort:{createdAt:-1}},
-            populate:{
-                path:'applicant',
+        const job = await prisma.job.findUnique({
+            where: { id: jobId },
+            include: {
+                company: true,
+                applications: {
+                    include: {
+                        applicant: true
+                    },
+                    orderBy: {
+                        createdAt: 'desc'
+                    }
                 }
+            }
         });
+
         if (!job) {
             return res.status(404).json({
-                message:"Job not found.",
-                success:false
-            })
-        };
-        return res.status(200).json({
-            job,
-            success:true
-        })
-    } 
-    catch (error) {
-       console.log(error);
-        
-    }
-}
+                message: "Job not found.",
+                success: false
+            });
+        }
 
-// update Status for applie user
+        return res.status(200).json({
+            job: formatJob(job),
+            success: true
+        });
+    } catch (error) {
+        console.error("Get Applicants Error:", error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false
+        });
+    }
+};
+
+// update application status (accepted / rejected / pending)
 export const updateStatus = async (req, res) => {
     try {
-        const {status} = req.body;
+        const { status } = req.body;
         const applicationId = req.params.id;
+
         if (!status) {
             return res.status(400).json({
                 message: "Status is required",
                 success: false
-            })
-        };
-        //find the appication by application id
-        const application = await Application.findOne({_id:applicationId});
+            });
+        }
+
+        const validStatuses = ["pending", "accepted", "rejected"];
+        if (!validStatuses.includes(status.toLowerCase())) {
+            return res.status(400).json({
+                message: "Invalid status value. Must be 'pending', 'accepted', or 'rejected'",
+                success: false
+            });
+        }
+
+        const application = await prisma.application.findUnique({
+            where: { id: applicationId }
+        });
+
         if (!application) {
             return res.status(404).json({
                 message: "Application not found",
                 success: false
-            })
-        };
-        //update the status
-        application.status = status.toLowerCase();
-        await application.save();
-        
-        return res.status(200).json({
-            message: "Status updated successfully",
-            success: true
-        })
+            });
+        }
 
-    } 
-    catch (error) {
-       console.log(error);
-        
+        const updatedApplication = await prisma.application.update({
+            where: { id: applicationId },
+            data: {
+                status: status.toLowerCase()
+            }
+        });
+
+        return res.status(200).json({
+            message: "Status updated successfully.",
+            application: formatApplication(updatedApplication),
+            success: true
+        });
+    } catch (error) {
+        console.error("Update Status Error:", error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false
+        });
     }
-}
+};

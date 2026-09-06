@@ -11,32 +11,37 @@ const CategoryCarousel = () => {
         "Backend Developer",
         "Data Science",
         "Graphic Designer",
-        "FullStack Developer"
-    ]
-    const dispatch= useDispatch();
+        "FullStack Developer",
+        "DevOps Engineer"
+    ];
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const searchHandler = (query) => {
         dispatch(setSearchedQuery(query));
         navigate("/browse");
-    }
-    return (
-        <div>
-            <Carousel className="w-full max-w-xl mx-auto my-20">
-                <CarouselContent>
-                    {
-                        category.map((cat, index) =>
-                            <CarouselItem className="md:basis-1/2 lg-basis-1/3">
-                                <Button onClick={()=>searchHandler(cat)} variant="outline" className="  hover:bg-[#d3dce8]  font-bold  rounded-full">{cat}</Button>
-                            </CarouselItem>
-                        )
-                    }
+    };
 
+    return (
+        <div className='px-12 sm:px-16 max-w-xl mx-auto my-12 sm:my-16'>
+            <Carousel className="w-full">
+                <CarouselContent className='-ml-2 md:-ml-4'>
+                    {category.map((cat, index) => (
+                        <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3 flex justify-center">
+                            <Button
+                                onClick={() => searchHandler(cat)}
+                                variant="outline"
+                                className="w-full truncate hover:bg-[#6A38C2]/10 hover:text-[#6A38C2] hover:border-[#6A38C2]/30 font-semibold rounded-full text-xs sm:text-sm py-2"
+                            >
+                                {cat}
+                            </Button>
+                        </CarouselItem>
+                    ))}
                 </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
+                <CarouselPrevious className='hidden sm:flex -left-10' />
+                <CarouselNext className='hidden sm:flex -right-10' />
             </Carousel>
         </div>
     );
-}
+};
 
 export default CategoryCarousel;

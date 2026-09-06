@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  student
+  recruiter
+}
+
+enum ApplicationStatus {
+  pending
+  accepted
+  rejected
+}
+
+model User {
+  id                 String        @id @default(uuid())
+  fullname           String
+  email              String        @unique
+  phoneNumber        String
+  password           String
+  role               Role          @default(student)
+  bio                String?
+  skills             String[]
+  resume             String?
+  resumeOriginalName String?
+  profilePhoto       String?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  companies          Company[]
+  jobs               Job[]         @relation("CreatedJobs")
+  applications       Application[]
+
+  @@map("users")
+}
+
+model Company {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  description String?
+  website     String?
+  location    String?
+  logo        String?
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobs        Job[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("companies")
+}
+
+model Job {
+  id             String        @id @default(uuid())
+  title          String
+  description    String
+  requirements   String[]
+  salary         Int
+  exprienceLevel Int
+  location       String
+  jobType        String
+  position       Int
+  companyId      String
+  company        Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  createdById    String
+  createdBy      User          @relation("CreatedJobs", fields: [createdById], references: [id], onDelete: Cascade)
+  applications   Application[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@map("jobs")
+}
+
+model Application {
+  id          String            @id @default(uuid())
+  jobId       String
+  job         Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  applicantId String
+  applicant   User              @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+  status      ApplicationStatus @default(pending)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@unique([jobId, applicantId])
+  @@map("applications")
+}

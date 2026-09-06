@@ -49,7 +49,7 @@ const {singleCompany}= useSelector(store=>store.company);
             const res = await axios.put(`${COMPANY_API_END_POINT}/update/${params.id}`, formData, {
                 headers: {
                     //because we send the file
-                    'Content-Type': 'multipart/from-data'
+                    'Content-Type': 'multipart/form-data'
                 },
                 withCredentials: true
             })

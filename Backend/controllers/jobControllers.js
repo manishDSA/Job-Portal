@@ -1,130 +1,154 @@
-import { Job } from "../models/jobmodel.js";
-
+import prisma from "../utils/prisma.js";
+import { formatJob } from "../utils/format.js";
 
 // admin job post
 export const postJob = async (req, res) => {
     try {
         const { title, description, requirements, salary, location, jobType, exprience, position, companyId } = req.body;
         const userId = req.id;
-        // check all body item
-        if (!title || !description || !requirements || !salary || !location || !jobType || !exprience || !position || !companyId) {
+
+        if (!title || !description || !requirements || !salary || !location || !jobType || exprience === undefined || !position || !companyId) {
             return res.status(400).json({
                 message: "Please fill all the fields",
-                status: false
-            })
-        };
-        //create a job
-        const job = await Job.create({
-            title,
-            description,
-            requirements: requirements.split(","),
-            salary: Number(salary),
-            location,
-            jobType,
-            exprienceLevel: exprience,
-            position,
-            company: companyId,
-            created_by: userId
+                status: false,
+                success: false
+            });
+        }
+
+        const requirementsArray = typeof requirements === "string"
+            ? requirements.split(",").map(r => r.trim()).filter(Boolean)
+            : Array.isArray(requirements) ? requirements : [];
+
+        const job = await prisma.job.create({
+            data: {
+                title,
+                description,
+                requirements: requirementsArray,
+                salary: Number(salary),
+                location,
+                jobType,
+                exprienceLevel: Number(exprience),
+                position: Number(position),
+                companyId,
+                createdById: userId
+            },
+            include: {
+                company: true
+            }
         });
 
-        return res.status(200).json({
-            message: " New Job created successfully",
-            job,
+        return res.status(201).json({
+            message: "New Job created successfully.",
+            job: formatJob(job),
             success: true
         });
-
+    } catch (error) {
+        console.error("Post Job Error:", error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false
+        });
     }
-    catch (error) {
-        console.log(error);
+};
 
-    }
-}
-// user/student job
+// user/student jobs listing with search keyword
 export const getAllJobs = async (req, res) => {
     try {
-        //filter the job using keyword
         const Keyword = req.query.Keyword || "";
-        const query = {
-            $or: [
-                //here i is case sensetive
-                { title: { $regex: Keyword, $options: "i" } },
-                { description: { $regex: Keyword, $options: "i" } },
+
+        const whereCondition = Keyword.trim() !== "" ? {
+            OR: [
+                { title: { contains: Keyword, mode: 'insensitive' } },
+                { description: { contains: Keyword, mode: 'insensitive' } },
+                { location: { contains: Keyword, mode: 'insensitive' } },
             ]
-        };
-        // populate use for get the actual infromation of user
-        const jobs = await Job.find(query)
-        // .populate({
-        //     path:"company"
-        // }).sort({createdAt: -1});
-        .populate({
-            path: "company",  
-        })
-        .sort({ createdAt: -1 });
-        
-        
-        if (!jobs) {
-            return res.status(404).json({
-                message: "No jobs found",
-                status: false
-            })
-        };
+        } : {};
+
+        const jobs = await prisma.job.findMany({
+            where: whereCondition,
+            include: {
+                company: true,
+                applications: true
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
+
         return res.status(200).json({
-            message: "Jobs found successfully",
-            jobs,
-            success: true,
-        })
+            message: "Jobs found successfully.",
+            jobs: jobs.map(formatJob),
+            success: true
+        });
+    } catch (error) {
+        console.error("Get All Jobs Error:", error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false
+        });
     }
-    catch (error) {
-        console.log(error);
+};
 
-    }
-}
-
-// user/student job
+// get job by id
 export const getjobById = async (req, res) => {
     try {
         const jobId = req.params.id;
-        const job = await Job.findById(jobId).populate({
-            path: "applications"
+        const job = await prisma.job.findUnique({
+            where: { id: jobId },
+            include: {
+                company: true,
+                applications: {
+                    include: {
+                        applicant: true
+                    }
+                }
+            }
         });
+
         if (!job) {
             return res.status(404).json({
-                message: "Job not found",
+                message: "Job not found.",
                 success: false
-            })
-        };
+            });
+        }
+
         return res.status(200).json({
-            job,
+            job: formatJob(job),
             success: true
-        })
+        });
+    } catch (error) {
+        console.error("Get Job By ID Error:", error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false
+        });
     }
-    catch (error) {
+};
 
-    }
-}
-
-// how many create job by admin
+// get jobs posted by admin/recruiter
 export const getAdminjobs = async (req, res) => {
-try {
-    const adminId = req.id;
-    const jobs = await Job.find({created_by: adminId }).populate({
-        path: "company",
-        createdAt:-1
-    });
-    if (!jobs) {
-        return res.status(404).json({
-            message: "No jobs found",
-            status: false
-        })
-    }
-    return res.status(200).json({
-        jobs,
-        success:true
-    })
-} 
-catch (error) {
-    console.log(error);
-    
-}
-}
+    try {
+        const adminId = req.id;
+        const jobs = await prisma.job.findMany({
+            where: { createdById: adminId },
+            include: {
+                company: true,
+                applications: true
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
 
+        return res.status(200).json({
+            jobs: jobs.map(formatJob),
+            success: true
+        });
+    } catch (error) {
+        console.error("Get Admin Jobs Error:", error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false
+        });
+    }
+};

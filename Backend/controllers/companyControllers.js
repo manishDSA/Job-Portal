@@ -1,6 +1,7 @@
-import { Company } from "../models/company.js";
+import prisma from "../utils/prisma.js";
 import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
+import { formatCompany } from "../utils/format.js";
 
 export const registerCompany = async (req, res) => {
     try {
@@ -9,106 +10,123 @@ export const registerCompany = async (req, res) => {
             return res.status(400).json({
                 message: "Company name is required",
                 success: false
-            })
+            });
         }
-        let company = await Company.findOne({ name: companyName })
-        if (company) {
+
+        const existingCompany = await prisma.company.findUnique({
+            where: { name: companyName }
+        });
+
+        if (existingCompany) {
             return res.status(400).json({
                 message: "Company already exists",
                 success: false
-            })
+            });
         }
 
-        company = await Company.create({
-            name: companyName,
-            userId: req.id
+        const company = await prisma.company.create({
+            data: {
+                name: companyName,
+                userId: req.id
+            }
         });
+
         return res.status(201).json({
-            message: "Company registered successfully ",
-            company,
+            message: "Company registered successfully.",
+            company: formatCompany(company),
             success: true
-        })
-
+        });
+    } catch (error) {
+        console.error("Register Company Error:", error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false
+        });
     }
-    catch (error) {
-        console.log(error);
-
-    }
-}
-
+};
 
 export const getCompany = async (req, res) => {
     try {
-        const userId = req.id;//logged in user
-        const companies = await Company.find({ userId });
-        if (!companies) {
-            return res.status(400).json({
-                message: "Companies not found.",
-                success: false
-            })
-        }
+        const userId = req.id;
+        const companies = await prisma.company.findMany({
+            where: { userId },
+            orderBy: { createdAt: 'desc' }
+        });
+
         return res.status(200).json({
-            companies,
-            success:true
-        })
+            companies: companies.map(formatCompany),
+            success: true
+        });
+    } catch (error) {
+        console.error("Get Company Error:", error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false
+        });
     }
-    catch (error) {
-        console.log(error);
-
-    }
-}
-
-
-//get company by id
+};
 
 export const getCompanyById = async (req, res) => {
     try {
-        // we get the id by param
         const companyId = req.params.id;
-        const company = await Company.findById(companyId);
+        const company = await prisma.company.findUnique({
+            where: { id: companyId }
+        });
+
         if (!company) {
-            return res.status(400).json({
+            return res.status(404).json({
                 message: "Company not found.",
                 success: false
-            })
+            });
         }
 
         return res.status(200).json({
-            company,
+            company: formatCompany(company),
             success: true
-        })
+        });
+    } catch (error) {
+        console.error("Get Company By ID Error:", error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false
+        });
     }
-    catch (error) {
-        console.log(error);
-
-    }
-}
-
+};
 
 export const updateCompany = async (req, res) => {
     try {
         const { name, description, website, location } = req.body;
-        const file = req.file;//cloudernary se karenge
-        const fileUri = getDataUri(file);
-        const cloudResponse = await cloudinary.uploader.upload(fileUri.content)
-        const logo = cloudResponse.secure_url
+        const file = req.file;
 
-        const updateData = { name, description, website, location,logo };
+        let logoUrl;
+        if (file) {
+            const fileUri = getDataUri(file);
+            const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+            logoUrl = cloudResponse.secure_url;
+        }
 
-        const company = await Company.findByIdAndUpdate(req.params.id, updateData, { new: true });
-         if (!company) {
-            return res.status(404).json({
-                message:"company not found.",
-                success:false
-            })
-         }
-         return res.status(200).json({
-            message:"Company information updated.",
-            success:true
-         })
+        const updateData = {};
+        if (name) updateData.name = name;
+        if (description !== undefined) updateData.description = description;
+        if (website !== undefined) updateData.website = website;
+        if (location !== undefined) updateData.location = location;
+        if (logoUrl) updateData.logo = logoUrl;
+
+        const company = await prisma.company.update({
+            where: { id: req.params.id },
+            data: updateData
+        });
+
+        return res.status(200).json({
+            message: "Company information updated.",
+            company: formatCompany(company),
+            success: true
+        });
+    } catch (error) {
+        console.error("Update Company Error:", error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false
+        });
     }
-    catch (error) {
-        console.log(error);
-
-    }
-}
+};

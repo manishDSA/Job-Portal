@@ -6,7 +6,7 @@ import { Toaster } from './components/ui/sonner.jsx'
 import { Provider } from 'react-redux'
 import store from './Redux/store.js'
 
-// this is for to make the persist the store when we refesh the page data that'swhy we do 
+// this is for to make the persist the store when we refesh the page data that's why we do 
 // it is part of redux toolkit
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from 'redux-persist'

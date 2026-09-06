@@ -9,6 +9,7 @@ import AppliedJobTable from './AppliedJobTable';
 import UpdateProfileDialog from './UpdateProfileDialog';
 import { useSelector } from 'react-redux';
 import useGetAllAppliedJob from '@/hooks/useGetAllAppliedJob';
+import ResumeViewerModal from './ResumeViewerModal';
 
 
 // const skillArray=["java","HTML","CSS","JavaScript","React.js"]
@@ -62,9 +63,19 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className='grid w-full max-w-sm items-center gap-1.5'>
-                    <Label className="text-md font-bold">Resume</Label>
+                    <Label className="text-md font-bold">Resume Document</Label>
                     {
-                        isResume?<a target='blank' href={user?.profile?.resume} className='text-blue-500 w-full hover:underline cursor-pointer'>{user?.profile?.resumeOriginalName}</a>:<span>NA</span>
+                        user?.profile?.resume ? (
+                            <div className="flex items-center gap-2 mt-1">
+                                <ResumeViewerModal
+                                    resumeUrl={user?.profile?.resume}
+                                    originalName={user?.profile?.resumeOriginalName || "My_Resume.pdf"}
+                                    triggerText={user?.profile?.resumeOriginalName || "View Uploaded Resume"}
+                                />
+                            </div>
+                        ) : (
+                            <span className="text-xs text-gray-500 italic">No resume uploaded yet. Edit profile to upload.</span>
+                        )
                     }
                 </div>
             </div>

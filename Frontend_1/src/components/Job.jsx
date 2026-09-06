@@ -1,59 +1,104 @@
 import React from 'react';
 import { Button } from './ui/button';
-import { Bookmark } from 'lucide-react';
-import { Avatar, AvatarImage } from './ui/avatar';
+import { Bookmark, MapPin } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Badge } from './ui/badge';
 import { useNavigate } from 'react-router-dom';
 
+const Job = ({ job }) => {
+    const navigate = useNavigate();
 
-    // const jobid= " kasncdcdbcidbnci"
-const Job = ({job}) => {
-    const navigate = useNavigate()
-// here we calculate the day to appied job
- const daysAgoFunction = (mongodbTime)=>{
-   const createdAt = new Date(mongodbTime);
-   const currentTime = new Date();
-   const timeDiff = currentTime - createdAt;
-   return Math.floor(timeDiff/(1000*24*60*60))
- }
+    // calculate days ago
+    const daysAgoFunction = (mongodbTime) => {
+        if (!mongodbTime) return "Recently";
+        const createdAt = new Date(mongodbTime);
+        const currentTime = new Date();
+        const timeDiff = currentTime - createdAt;
+        const days = Math.floor(timeDiff / (1000 * 24 * 60 * 60));
+        if (days === 0) return "Today";
+        if (days === 1) return "1 day ago";
+        return `${days} days ago`;
+    };
+
+    const companyInitials = job?.company?.name
+        ? job.company.name.slice(0, 2).toUpperCase()
+        : 'CO';
+
     return (
-        <div className='p-5  rounded-xl shadow-xl bg-white border border-gray-100'>
-            <div className='flex items-center justify-between'>
+        <div className='p-5 rounded-2xl bg-white border border-gray-200/80 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between h-full'>
+            <div>
+                {/* Header: Posted Time & Bookmark */}
+                <div className='flex items-center justify-between text-xs text-gray-500 mb-3'>
+                    <span className='font-medium bg-gray-100 px-2.5 py-1 rounded-full'>
+                        {daysAgoFunction(job?.createdAt)}
+                    </span>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="rounded-full w-8 h-8 text-gray-400 hover:text-gray-700 hover:bg-gray-100"
+                    >
+                        <Bookmark className='w-4 h-4' />
+                    </Button>
+                </div>
 
-                <p className='text-sm text-gray-500'> {daysAgoFunction(job?.createdAt)==0?"Today":`${daysAgoFunction(job?.createdAt)} days ago`}</p>
-                <Button variant="outline" className=" rounded-full hover:bg-gray-200" size="icon"><Bookmark /></Button>
-            </div>
-            <div className='flex items-center gap-2 my-2'>
-                <Button className="p-6" size="icon"  >
-                    <Avatar>
-                        <AvatarImage src={job?.company?.logo} />
+                {/* Company Info */}
+                <div className='flex items-center gap-3 my-2'>
+                    <Avatar className='w-12 h-12 rounded-xl border border-gray-100 shadow-sm'>
+                        <AvatarImage src={job?.company?.logo} alt={job?.company?.name} className='object-cover' />
+                        <AvatarFallback className='bg-purple-100 text-[#6A38C2] font-bold rounded-xl text-sm'>
+                            {companyInitials}
+                        </AvatarFallback>
                     </Avatar>
-                </Button>
-                <div>
-                    <h1 className='font-medium text-lg'>{job?.company?.name}</h1>
-                    <p className='text-sm text-gray-500'>India</p>
+                    <div className='min-w-0 flex-1'>
+                        <h2 className='font-semibold text-base text-gray-900 truncate'>{job?.company?.name || "Company"}</h2>
+                        <p className='text-xs text-gray-500 flex items-center gap-1 mt-0.5'>
+                            <MapPin className='w-3 h-3 text-gray-400' />
+                            <span className='truncate'>{job?.location || "India"}</span>
+                        </p>
+                    </div>
+                </div>
+
+                {/* Job Title & Description */}
+                <div className='my-3'>
+                    <h3 className='font-bold text-lg text-gray-900 line-clamp-1 hover:text-[#6A38C2] transition-colors cursor-pointer' onClick={() => navigate(`/description/${job?._id}`)}>
+                        {job?.title}
+                    </h3>
+                    <p className='text-xs sm:text-sm text-gray-600 line-clamp-2 mt-1 leading-relaxed'>
+                        {job?.description}
+                    </p>
+                </div>
+
+                {/* Badges */}
+                <div className='flex flex-wrap items-center gap-1.5 mt-3'>
+                    <Badge className='text-blue-700 bg-blue-50 hover:bg-blue-100 font-semibold text-xs border border-blue-100'>
+                        {job?.position || 1} {job?.position === 1 ? 'Position' : 'Positions'}
+                    </Badge>
+                    <Badge className='text-[#F83002] bg-orange-50 hover:bg-orange-100 font-semibold text-xs border border-orange-100'>
+                        {job?.jobType || 'Full Time'}
+                    </Badge>
+                    <Badge className='text-[#7209b7] bg-purple-50 hover:bg-purple-100 font-semibold text-xs border border-purple-100'>
+                        {job?.salary} LPA
+                    </Badge>
                 </div>
             </div>
-            <div>
-                <h1 className='font-bold text-lg my-2'>{job?.title}</h1>
-                <p className='text-sm text-gray-600'>{job?.description}</p>
-            </div>
-            <div className='flex items-center gap-2 mt-4'>
-                <Badge className={`text-blue-700 font-bold`} variant="ghost">{job?.position} Positions</Badge>
-                <Badge className={`text-[#F83002] font-bold`} variant="ghost">{job?.jobType}</Badge>
-                <Badge className={`text-[#7209b7] font-bold`} variant="ghost">{job?.salary}LPA</Badge>
-            </div>
-            <div className='flex items-center gap-4 mt-4'>
-                <button onClick={()=>navigate(`/description/${job._id}`)} className="px-4 py-2 font-semibold  rounded-xl border-2 border-gray-300-500">
+
+            {/* Actions */}
+            <div className='flex items-center gap-2 sm:gap-3 mt-5 pt-4 border-t border-gray-100'>
+                <Button
+                    onClick={() => navigate(`/description/${job?._id}`)}
+                    variant="outline"
+                    className="flex-1 rounded-xl text-xs sm:text-sm font-medium border-gray-300 hover:bg-gray-50 hover:text-black"
+                >
                     Details
-                </button>
-                {/* <button className="px-4 py-2 font-semibold  rounded-xl border-2 border-gray-300-500">
-                    
-                </button> */}
-                <button className=" bg-[#7209b7] px-4 py-2 font-semibold  rounded-xl border-2 text-white border-gray-300-500">Save For Later</button>
+                </Button>
+                <Button
+                    className="flex-1 bg-[#6A38C2] hover:bg-[#5b30a6] text-white rounded-xl text-xs sm:text-sm font-medium shadow-sm"
+                >
+                    Save For Later
+                </Button>
             </div>
         </div>
     );
-}
+};
 
 export default Job;
