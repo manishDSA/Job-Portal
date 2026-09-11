@@ -1,71 +1,100 @@
 import React, { useState } from 'react';
 import Navbar from './shared/Navbar';
-import { Avatar, AvatarImage } from './ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Button } from './ui/button';
-import { Contact, Mail, Pen } from 'lucide-react';
-import { Badge } from './ui/badge';
-import { Label } from './ui/label';
+import { Contact, Mail, Pen, Briefcase, FileText } from 'lucide-react';
 import AppliedJobTable from './AppliedJobTable';
 import UpdateProfileDialog from './UpdateProfileDialog';
 import { useSelector } from 'react-redux';
 import useGetAllAppliedJob from '@/hooks/useGetAllAppliedJob';
 import ResumeViewerModal from './ResumeViewerModal';
 
-
-// const skillArray=["java","HTML","CSS","JavaScript","React.js"]
-const isResume= true
 const Profile = () => {
-    //this is custom hook for get the how many jobs applied by the user
+    // Custom hook to fetch user's applied jobs
     useGetAllAppliedJob();
-    const[open,setOpen]= useState(false)
-    const {user} = useSelector(store=>store.auth)
-    return (
-        <div>
-            <Navbar />
-            <div className='max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl my-5 p-8'>
-                <div className='flex justify-between'>
-                    <div className='flex justify-between'>
+    const [open, setOpen] = useState(false);
+    const { user } = useSelector(store => store.auth);
 
-                        <Avatar>
-                            <AvatarImage src="https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg" alt="profile" />
-                        </Avatar>
-                        <div>
-                            <h1 className='font-medium text-xl'>{user?.fullname}</h1>
-                            <p>{user?.profile?.bio}</p>
+    const userInitials = user?.fullname
+        ? user.fullname.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+        : 'U';
+
+    return (
+        <div className="bg-gray-50/50 min-h-screen pb-12">
+            <Navbar />
+            
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+                {/* Main Profile Info Card */}
+                <div className="bg-white border border-gray-200/80 rounded-2xl p-4 sm:p-8 shadow-xs">
+                    {/* Header: Avatar, Details & Edit Button */}
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div className="flex items-center gap-4 sm:gap-6 w-full sm:w-auto">
+                            <Avatar className="h-16 w-16 sm:h-24 sm:w-24 border-2 border-indigo-100 shadow-xs shrink-0">
+                                <AvatarImage src={user?.profile?.profilephoto} alt={user?.fullname || "Profile"} />
+                                <AvatarFallback className="bg-indigo-100 text-indigo-700 font-bold text-lg sm:text-2xl">
+                                    {userInitials}
+                                </AvatarFallback>
+                            </Avatar>
+
+                            <div className="min-w-0 flex-1">
+                                <h1 className="font-bold text-lg sm:text-2xl text-gray-900 truncate">
+                                    {user?.fullname || "User Name"}
+                                </h1>
+                                <p className="text-xs sm:text-sm text-gray-600 mt-1 leading-relaxed line-clamp-3">
+                                    {user?.profile?.bio || "No professional summary added yet."}
+                                </p>
+                            </div>
+                        </div>
+
+                        <Button 
+                            onClick={() => setOpen(true)} 
+                            variant="outline"
+                            className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 border-gray-300 text-gray-700 hover:bg-slate-100 hover:text-gray-900 rounded-xl text-xs font-semibold px-4 py-2"
+                        >
+                            <Pen className="w-3.5 h-3.5 text-gray-500" />
+                            <span>Edit Profile</span>
+                        </Button>
+                    </div>
+
+                    {/* Contact Details Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 my-6 pt-5 border-t border-gray-100">
+                        <div className="flex items-center gap-3 p-2.5 rounded-xl bg-gray-50/70 border border-gray-100 text-gray-700 text-xs sm:text-sm">
+                            <Mail className="w-4 h-4 text-indigo-600 shrink-0" />
+                            <span className="truncate">{user?.email || "No email provided"}</span>
+                        </div>
+                        <div className="flex items-center gap-3 p-2.5 rounded-xl bg-gray-50/70 border border-gray-100 text-gray-700 text-xs sm:text-sm">
+                            <Contact className="w-4 h-4 text-indigo-600 shrink-0" />
+                            <span>{user?.phoneNumber || "No phone number added"}</span>
                         </div>
                     </div>
-                    <Button onClick={()=>setOpen(true)} className="text-right border rounded-xl border-gray-500  hover:bg-gray-500 hover:text-white">
-                        <Pen />
-                    </Button>
-                    {/* <Button className="text-right" variant="outline"><Pen /></Button> */}
-                </div>
-                <div className='my-5'>
-                    <div className='flex items-center gap-3 my-2'>
 
-                        <Mail />
-                        <span>{user?.email}</span>
+                    {/* Skills Section */}
+                    <div className="my-5 pt-4 border-t border-gray-100">
+                        <h2 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">
+                            Skills & Expertise
+                        </h2>
+                        <div className="flex flex-wrap gap-2">
+                            {user?.profile?.skills && user.profile.skills.length > 0 ? (
+                                user.profile.skills.map((item, index) => (
+                                    <span 
+                                        key={index} 
+                                        className="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 text-slate-800 border border-slate-200/80 shadow-2xs hover:bg-slate-200 transition-colors"
+                                    >
+                                        {item}
+                                    </span>
+                                ))
+                            ) : (
+                                <span className="text-xs text-gray-400 italic">No skills listed yet. Click edit profile to add skills.</span>
+                            )}
+                        </div>
                     </div>
-                    <div className='flex items-center gap-3 my-2'>
 
-                        <Contact />
-                        <span>{user?.phoneNumber}</span>
-                    </div>
-
-                </div>
-                <div className='my-5'>
-                    <h1>Skills</h1>
-                    <div className='flex items-center ga'>
-
-                    {
-                    user?.profile?.skills?.length!=0?user?.profile?.skills.map((item,index)=><button key={index} className="rounded-xl bg-black text-white px-4 py-2 m-2 shadow-md">{item}</button>): <span>NA</span>
-                    
-                    }
-                    </div>
-                </div>
-                <div className='grid w-full max-w-sm items-center gap-1.5'>
-                    <Label className="text-md font-bold">Resume Document</Label>
-                    {
-                        user?.profile?.resume ? (
+                    {/* Resume Document Section */}
+                    <div className="mt-5 pt-4 border-t border-gray-100">
+                        <h2 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
+                            Resume Document
+                        </h2>
+                        {user?.profile?.resume ? (
                             <div className="flex items-center gap-2 mt-1">
                                 <ResumeViewerModal
                                     resumeUrl={user?.profile?.resume}
@@ -74,20 +103,28 @@ const Profile = () => {
                                 />
                             </div>
                         ) : (
-                            <span className="text-xs text-gray-500 italic">No resume uploaded yet. Edit profile to upload.</span>
-                        )
-                    }
+                            <span className="text-xs text-gray-400 italic">No resume uploaded yet. Edit profile to upload document.</span>
+                        )}
+                    </div>
+                </div>
+
+                {/* Applied Jobs Section */}
+                <div className="bg-white border border-gray-200/80 rounded-2xl p-4 sm:p-8 my-6 shadow-xs">
+                    <div className="flex items-center justify-between mb-4">
+                        <h2 className="font-bold text-base sm:text-lg text-gray-900 flex items-center gap-2">
+                            <Briefcase className="w-4 h-4 text-indigo-600" />
+                            <span>Applied Jobs</span>
+                        </h2>
+                    </div>
+                    <AppliedJobTable />
                 </div>
             </div>
-                <div className='max-w-4xl mx-auto bg-white rounded-2xl'>
-                    <h1 className='font-bold text-lg my-5 '>Applied Jobs</h1>
-                    {/* component */}
-                     <AppliedJobTable/>
-                </div>
-                  {/* this is also component */}
-                <UpdateProfileDialog open={open} setOpen={setOpen}/>
+
+            {/* Edit Profile Modal */}
+            <UpdateProfileDialog open={open} setOpen={setOpen} />
         </div>
     );
-}
+};
 
 export default Profile;
+

@@ -76,7 +76,7 @@ const FilterCard = () => {
                     <RadioGroupItem
                       value={data}
                       id={itemId}
-                      className="border-gray-400 text-[#6A38C2] focus:ring-[#6A38C2]"
+                      className="border-gray-400 text-indigo-600 focus:ring-indigo-600"
                     />
                     <Label
                       htmlFor={itemId}

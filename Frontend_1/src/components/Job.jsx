@@ -45,7 +45,7 @@ const Job = ({ job }) => {
                 <div className='flex items-center gap-3 my-2'>
                     <Avatar className='w-12 h-12 rounded-xl border border-gray-100 shadow-sm'>
                         <AvatarImage src={job?.company?.logo} alt={job?.company?.name} className='object-cover' />
-                        <AvatarFallback className='bg-purple-100 text-[#6A38C2] font-bold rounded-xl text-sm'>
+                        <AvatarFallback className='bg-indigo-100 text-indigo-700 font-bold rounded-xl text-sm'>
                             {companyInitials}
                         </AvatarFallback>
                     </Avatar>
@@ -60,7 +60,7 @@ const Job = ({ job }) => {
 
                 {/* Job Title & Description */}
                 <div className='my-3'>
-                    <h3 className='font-bold text-lg text-gray-900 line-clamp-1 hover:text-[#6A38C2] transition-colors cursor-pointer' onClick={() => navigate(`/description/${job?._id}`)}>
+                    <h3 className='font-bold text-lg text-gray-900 line-clamp-1 hover:text-indigo-600 transition-colors cursor-pointer' onClick={() => navigate(`/description/${job?._id}`)}>
                         {job?.title}
                     </h3>
                     <p className='text-xs sm:text-sm text-gray-600 line-clamp-2 mt-1 leading-relaxed'>
@@ -76,7 +76,7 @@ const Job = ({ job }) => {
                     <Badge className='text-[#F83002] bg-orange-50 hover:bg-orange-100 font-semibold text-xs border border-orange-100'>
                         {job?.jobType || 'Full Time'}
                     </Badge>
-                    <Badge className='text-[#7209b7] bg-purple-50 hover:bg-purple-100 font-semibold text-xs border border-purple-100'>
+                    <Badge className='text-indigo-700 bg-indigo-50 hover:bg-indigo-100 font-semibold text-xs border border-indigo-100'>
                         {job?.salary} LPA
                     </Badge>
                 </div>
@@ -92,7 +92,7 @@ const Job = ({ job }) => {
                     Details
                 </Button>
                 <Button
-                    className="flex-1 bg-[#6A38C2] hover:bg-[#5b30a6] text-white rounded-xl text-xs sm:text-sm font-medium shadow-sm"
+                    className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs sm:text-sm font-medium shadow-xs"
                 >
                     Save For Later
                 </Button>

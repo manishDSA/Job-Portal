@@ -75,7 +75,7 @@ const Jobs = () => {
                         <p className='text-sm text-gray-500 mt-1'>
                             Showing <span className='font-semibold text-gray-800'>{filterJobs?.length || 0}</span> {filterJobs?.length === 1 ? 'job' : 'jobs'}
                             {searchedQuery && (
-                                <span> for "<span className='text-[#6A38C2] font-semibold'>{searchedQuery}</span>"</span>
+                                <span> for "<span className='text-indigo-600 font-semibold'>{searchedQuery}</span>"</span>
                             )}
                         </p>
                     </div>
@@ -95,7 +95,7 @@ const Jobs = () => {
                         )}
                         <Button
                             onClick={() => setShowMobileFilter(!showMobileFilter)}
-                            className='bg-[#6A38C2] hover:bg-[#5b30a6] text-white flex items-center gap-2 rounded-xl text-sm'
+                            className='bg-indigo-600 hover:bg-indigo-700 text-white flex items-center gap-2 rounded-xl text-sm'
                         >
                             <SlidersHorizontal className='w-4 h-4' />
                             {showMobileFilter ? 'Hide Filters' : 'Filters'}
@@ -131,7 +131,7 @@ const Jobs = () => {
                     <div className='flex-1 w-full'>
                         {filterJobs?.length <= 0 ? (
                             <div className='bg-white border border-gray-200 rounded-2xl p-10 text-center shadow-sm flex flex-col items-center justify-center my-6'>
-                                <div className='w-16 h-16 bg-purple-50 text-[#6A38C2] rounded-full flex items-center justify-center mb-4'>
+                                <div className='w-16 h-16 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mb-4'>
                                     <Briefcase className='w-8 h-8' />
                                 </div>
                                 <h3 className='text-lg font-bold text-gray-900 mb-1'>No Jobs Found</h3>
@@ -143,7 +143,7 @@ const Jobs = () => {
                                 {searchedQuery && (
                                     <Button
                                         onClick={() => dispatch(setSearchedQuery(''))}
-                                        className='bg-[#6A38C2] hover:bg-[#5b30a6] text-white rounded-xl'
+                                        className='bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl'
                                     >
                                         Clear All Filters
                                     </Button>

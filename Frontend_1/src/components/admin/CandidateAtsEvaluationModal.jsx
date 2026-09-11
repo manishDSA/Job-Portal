@@ -68,9 +68,9 @@ const CandidateAtsEvaluationModal = ({ applicant, jobId, jobTitle }) => {
                 <Button
                     size="sm"
                     variant="outline"
-                    className="flex items-center gap-1.5 border-purple-300 text-[#6A38C2] hover:bg-purple-50 rounded-xl text-xs font-semibold px-3 py-1.5 shadow-xs"
+                    className="flex items-center gap-1.5 border-indigo-300 text-indigo-700 hover:bg-indigo-50 rounded-xl text-xs font-semibold px-3 py-1.5 shadow-xs"
                 >
-                    <Sparkles className="w-3.5 h-3.5 text-purple-600" />
+                    <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
                     ATS Check
                 </Button>
             </DialogTrigger>
@@ -78,7 +78,7 @@ const CandidateAtsEvaluationModal = ({ applicant, jobId, jobTitle }) => {
                 <DialogHeader>
                     <div className="flex items-center justify-between pb-2 border-b border-gray-100">
                         <div className="flex items-center gap-2.5">
-                            <div className="p-2 bg-purple-100 rounded-xl text-[#6A38C2]">
+                            <div className="p-2 bg-indigo-100 rounded-xl text-indigo-600">
                                 <UserCheck className="w-5 h-5" />
                             </div>
                             <div>
@@ -103,7 +103,7 @@ const CandidateAtsEvaluationModal = ({ applicant, jobId, jobTitle }) => {
 
                 {loading ? (
                     <div className="py-12 text-center space-y-3">
-                        <Loader2 className="w-8 h-8 text-purple-600 animate-spin mx-auto" />
+                        <Loader2 className="w-8 h-8 text-indigo-600 animate-spin mx-auto" />
                         <p className="text-xs text-gray-600 font-medium">
                             Analyzing candidate profile & resume skills against job requirements...
                         </p>
@@ -111,7 +111,7 @@ const CandidateAtsEvaluationModal = ({ applicant, jobId, jobTitle }) => {
                 ) : analysis ? (
                     <div className="space-y-4 my-2 animate-in fade-in duration-300">
                         {/* Match Score & Verdict */}
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-purple-50/50 p-4 rounded-xl border border-purple-100">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-indigo-50/50 p-4 rounded-xl border border-indigo-100">
                             <div className="flex items-center gap-4">
                                 <div className={`px-3.5 py-1.5 rounded-xl font-bold text-lg border ${getScoreColor(analysis.matchScore)}`}>
                                     {analysis.matchScore}%
@@ -186,14 +186,14 @@ const CandidateAtsEvaluationModal = ({ applicant, jobId, jobTitle }) => {
                         {/* Recommendations / Interview Probe */}
                         {analysis.recommendations?.length > 0 && (
                             <div className="p-3.5 bg-gray-50 rounded-xl border border-gray-200 space-y-2">
-                                <div className="flex items-center gap-1.5 text-purple-900 font-semibold text-xs">
-                                    <Lightbulb className="w-4 h-4 text-purple-600" />
+                                <div className="flex items-center gap-1.5 text-indigo-950 font-semibold text-xs">
+                                    <Lightbulb className="w-4 h-4 text-indigo-600" />
                                     Key Observations & Hiring Insights
                                 </div>
                                 <ul className="space-y-1">
                                     {analysis.recommendations.map((tip, idx) => (
                                         <li key={idx} className="text-xs text-gray-600 flex items-start gap-1.5">
-                                            <span className="text-purple-600 font-bold">•</span>
+                                            <span className="text-indigo-600 font-bold">•</span>
                                             <span>{tip}</span>
                                         </li>
                                     ))}
@@ -205,7 +205,7 @@ const CandidateAtsEvaluationModal = ({ applicant, jobId, jobTitle }) => {
                     <div className="py-8 text-center">
                         <Button
                             onClick={handleAnalyze}
-                            className="bg-[#6A38C2] hover:bg-[#5b30a6] text-white rounded-xl text-xs font-semibold px-4 py-2"
+                            className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold px-4 py-2"
                         >
                             Start ATS Evaluation
                         </Button>

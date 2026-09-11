@@ -31,16 +31,16 @@ const ResumeViewerModal = ({ resumeUrl, originalName = "Resume.pdf", triggerText
             <DialogTrigger asChild>
                 <button
                     type="button"
-                    className={className || "inline-flex items-center gap-1.5 text-xs font-semibold text-purple-600 hover:text-purple-800 hover:underline cursor-pointer bg-purple-50 px-2.5 py-1 rounded-lg border border-purple-100 transition-colors"}
+                    className={className || "inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-700 hover:text-indigo-900 cursor-pointer bg-indigo-50/80 hover:bg-indigo-100 px-3 py-1.5 rounded-xl border border-indigo-100 transition-colors"}
                 >
-                    <FileText className="w-3.5 h-3.5 text-purple-600" />
+                    <FileText className="w-3.5 h-3.5 text-indigo-600" />
                     {triggerText || originalName || "View Resume"}
                 </button>
             </DialogTrigger>
             <DialogContent className="max-w-4xl w-full h-[88vh] flex flex-col bg-white rounded-2xl p-6">
                 <DialogHeader className="flex flex-row items-center justify-between pb-3 border-b border-gray-100 pr-6">
                     <div className="flex items-center gap-2.5">
-                        <div className="p-2 bg-purple-100 rounded-xl text-[#6A38C2]">
+                        <div className="p-2 bg-indigo-50 rounded-xl text-indigo-600">
                             <FileText className="w-5 h-5" />
                         </div>
                         <div>
@@ -68,7 +68,7 @@ const ResumeViewerModal = ({ resumeUrl, originalName = "Resume.pdf", triggerText
                             download={originalName || "resume.pdf"}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-[#6A38C2] hover:bg-[#5b30a6] text-white rounded-xl transition-colors shadow-xs"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors shadow-xs"
                         >
                             <Download className="w-3.5 h-3.5" />
                             Download

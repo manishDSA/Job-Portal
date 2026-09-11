@@ -13,7 +13,7 @@ const LateastJobCard = ({ job }) => {
         <h2 className='font-semibold text-base text-gray-900 truncate'>{job?.company?.name || "Company"}</h2>
         <p className='text-xs text-gray-500 mt-0.5'>{job?.location || "India"}</p>
         
-        <h3 className='font-bold text-lg text-gray-900 my-2 line-clamp-1 hover:text-[#6A38C2] transition-colors'>
+        <h3 className='font-bold text-lg text-gray-900 my-2 line-clamp-1 hover:text-indigo-600 transition-colors'>
           {job?.title}
         </h3>
         <p className='text-xs sm:text-sm text-gray-600 line-clamp-2 leading-relaxed'>
@@ -28,7 +28,7 @@ const LateastJobCard = ({ job }) => {
         <Badge className='text-[#F83002] bg-orange-50 hover:bg-orange-100 font-semibold text-xs border border-orange-100'>
           {job?.jobType || 'Full Time'}
         </Badge>
-        <Badge className='text-[#7209b7] bg-purple-50 hover:bg-purple-100 font-semibold text-xs border border-purple-100'>
+        <Badge className='text-indigo-700 bg-indigo-50 hover:bg-indigo-100 font-semibold text-xs border border-indigo-100'>
           {job?.salary} LPA
         </Badge>
       </div>

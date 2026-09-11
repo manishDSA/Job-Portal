@@ -52,12 +52,12 @@ const Navbar = () => {
                         {user && user.role === 'recruiter' ? (
                             <>
                                 <li>
-                                    <Link to='/admin/companies' className='hover:text-[#6A38C2] transition-colors'>
+                                    <Link to='/admin/companies' className='hover:text-indigo-600 transition-colors'>
                                         Companies
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to='/admin/jobs' className='hover:text-[#6A38C2] transition-colors'>
+                                    <Link to='/admin/jobs' className='hover:text-indigo-600 transition-colors'>
                                         Jobs
                                     </Link>
                                 </li>
@@ -65,17 +65,17 @@ const Navbar = () => {
                         ) : (
                             <>
                                 <li>
-                                    <Link to='/' className='hover:text-[#6A38C2] transition-colors'>
+                                    <Link to='/' className='hover:text-indigo-600 transition-colors'>
                                         Home
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to='/jobs' className='hover:text-[#6A38C2] transition-colors'>
+                                    <Link to='/jobs' className='hover:text-indigo-600 transition-colors'>
                                         Jobs
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to='/browse' className='hover:text-[#6A38C2] transition-colors'>
+                                    <Link to='/browse' className='hover:text-indigo-600 transition-colors'>
                                         Browse
                                     </Link>
                                 </li>
@@ -92,7 +92,7 @@ const Navbar = () => {
                                 </Button>
                             </Link>
                             <Link to='/signup'>
-                                <Button className='bg-[#6A38C2] hover:bg-[#5b30a6] text-white rounded-xl shadow-sm'>
+                                <Button className='bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-xs'>
                                     Sign Up
                                 </Button>
                             </Link>
@@ -100,9 +100,9 @@ const Navbar = () => {
                     ) : (
                         <Popover>
                             <PopoverTrigger asChild>
-                                <Avatar className='cursor-pointer w-9 h-9 border border-gray-200 hover:ring-2 hover:ring-[#6A38C2]/40 transition-all'>
+                                <Avatar className='cursor-pointer w-9 h-9 border border-gray-200 hover:ring-2 hover:ring-indigo-600/40 transition-all'>
                                     <AvatarImage src={user?.profile?.profilephoto} alt={user?.fullname} />
-                                    <AvatarFallback className='bg-purple-100 text-[#6A38C2] font-semibold text-xs'>
+                                    <AvatarFallback className='bg-indigo-100 text-indigo-700 font-semibold text-xs'>
                                         {userInitials}
                                     </AvatarFallback>
                                 </Avatar>
@@ -111,7 +111,7 @@ const Navbar = () => {
                                 <div className='flex items-center gap-3 pb-3 border-b border-gray-100'>
                                     <Avatar className='w-11 h-11 border border-gray-100'>
                                         <AvatarImage src={user?.profile?.profilephoto} alt={user?.fullname} />
-                                        <AvatarFallback className='bg-purple-100 text-[#6A38C2] font-semibold text-sm'>
+                                        <AvatarFallback className='bg-indigo-100 text-indigo-700 font-semibold text-sm'>
                                             {userInitials}
                                         </AvatarFallback>
                                     </Avatar>
@@ -150,7 +150,7 @@ const Navbar = () => {
                             <PopoverTrigger asChild>
                                 <Avatar className='cursor-pointer w-8 h-8 border border-gray-200'>
                                     <AvatarImage src={user?.profile?.profilephoto} alt={user?.fullname} />
-                                    <AvatarFallback className='bg-purple-100 text-[#6A38C2] font-semibold text-xs'>
+                                    <AvatarFallback className='bg-indigo-100 text-indigo-700 font-semibold text-xs'>
                                         {userInitials}
                                     </AvatarFallback>
                                 </Avatar>
@@ -254,7 +254,7 @@ const Navbar = () => {
                                 </Button>
                             </Link>
                             <Link to='/signup' className='flex-1' onClick={() => setMobileMenuOpen(false)}>
-                                <Button className='w-full bg-[#6A38C2] hover:bg-[#5b30a6] text-white rounded-xl'>
+                                <Button className='w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl'>
                                     Sign Up
                                 </Button>
                             </Link>

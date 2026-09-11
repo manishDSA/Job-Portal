@@ -29,14 +29,14 @@ const Browse = () => {
           </h1>
           {searchedQuery && (
             <p className='text-sm text-gray-500 mt-1'>
-              Showing results for "<span className='text-[#6A38C2] font-semibold'>{searchedQuery}</span>"
+              Showing results for "<span className='text-indigo-600 font-semibold'>{searchedQuery}</span>"
             </p>
           )}
         </div>
 
         {allJobs?.length <= 0 ? (
           <div className='bg-white border border-gray-200 rounded-2xl p-10 text-center shadow-sm flex flex-col items-center justify-center my-6'>
-            <div className='w-16 h-16 bg-purple-50 text-[#6A38C2] rounded-full flex items-center justify-center mb-4'>
+            <div className='w-16 h-16 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mb-4'>
               <Briefcase className='w-8 h-8' />
             </div>
             <h3 className='text-lg font-bold text-gray-900 mb-1'>No Jobs Found</h3>

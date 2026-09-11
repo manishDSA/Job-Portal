@@ -51,16 +51,16 @@ const AiCoverLetterModal = ({ jobId, jobTitle, companyName, user }) => {
             <DialogTrigger asChild>
                 <Button
                     variant="outline"
-                    className="flex items-center gap-2 border-purple-200 text-[#6A38C2] hover:bg-purple-50 rounded-xl text-xs sm:text-sm font-semibold py-2 px-4 shadow-xs"
+                    className="flex items-center gap-2 border-indigo-200 text-indigo-700 hover:bg-indigo-50 rounded-xl text-xs sm:text-sm font-semibold py-2 px-4 shadow-xs"
                 >
-                    <FileText className="w-4 h-4 text-purple-600" />
+                    <FileText className="w-4 h-4 text-indigo-600" />
                     AI Cover Letter
                 </Button>
             </DialogTrigger>
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl p-6">
                 <DialogHeader>
                     <div className="flex items-center gap-2">
-                        <div className="p-2 bg-purple-100 rounded-xl text-[#6A38C2]">
+                        <div className="p-2 bg-indigo-100 rounded-xl text-indigo-600">
                             <Sparkles className="w-5 h-5" />
                         </div>
                         <DialogTitle className="text-xl font-bold text-gray-900">
@@ -75,7 +75,7 @@ const AiCoverLetterModal = ({ jobId, jobTitle, companyName, user }) => {
                 <div className="space-y-4 my-2">
                     {!coverLetter ? (
                         <div className="text-center py-8 px-4 bg-gray-50 rounded-xl border border-dashed border-gray-200">
-                            <FileText className="w-10 h-10 text-purple-400 mx-auto mb-3" />
+                            <FileText className="w-10 h-10 text-indigo-400 mx-auto mb-3" />
                             <h4 className="font-semibold text-gray-800 text-sm">Ready to generate your cover letter?</h4>
                             <p className="text-xs text-gray-500 mt-1 max-w-md mx-auto">
                                 Google Gemini will combine your skills, bio, and experience with the requirements of this job to craft an authentic application letter.
@@ -83,7 +83,7 @@ const AiCoverLetterModal = ({ jobId, jobTitle, companyName, user }) => {
                             <Button
                                 onClick={handleGenerate}
                                 disabled={loading}
-                                className="mt-4 bg-[#6A38C2] hover:bg-[#5b30a6] text-white rounded-xl text-sm font-medium px-5 py-2.5 shadow-md inline-flex items-center gap-2"
+                                className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-medium px-5 py-2.5 shadow-xs inline-flex items-center gap-2"
                             >
                                 {loading ? (
                                     <>
@@ -117,7 +117,7 @@ const AiCoverLetterModal = ({ jobId, jobTitle, companyName, user }) => {
                                     <Button
                                         size="sm"
                                         onClick={handleCopy}
-                                        className="bg-[#6A38C2] hover:bg-[#5b30a6] text-white text-xs rounded-lg h-8 flex items-center gap-1.5"
+                                        className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs rounded-lg h-8 flex items-center gap-1.5"
                                     >
                                         {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                                         {copied ? 'Copied!' : 'Copy Letter'}
@@ -128,7 +128,7 @@ const AiCoverLetterModal = ({ jobId, jobTitle, companyName, user }) => {
                                 value={coverLetter}
                                 onChange={(e) => setCoverLetter(e.target.value)}
                                 rows={12}
-                                className="w-full p-4 text-xs sm:text-sm text-gray-800 bg-gray-50/60 border border-gray-200 rounded-xl leading-relaxed focus:ring-2 focus:ring-purple-500 focus:outline-none"
+                                className="w-full p-4 text-xs sm:text-sm text-gray-800 bg-gray-50/60 border border-gray-200 rounded-xl leading-relaxed focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                             />
                         </div>
                     )}

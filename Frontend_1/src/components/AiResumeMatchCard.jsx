@@ -49,16 +49,16 @@ const AiResumeMatchCard = ({ jobId, user }) => {
     };
 
     return (
-        <div className="bg-gradient-to-br from-purple-50/70 via-indigo-50/40 to-white border border-purple-100 rounded-2xl p-5 sm:p-6 shadow-xs">
+        <div className="bg-gradient-to-br from-indigo-50/70 via-slate-50 to-white border border-indigo-100/80 rounded-2xl p-5 sm:p-6 shadow-xs">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-start gap-3">
-                    <div className="p-2.5 bg-purple-100/80 rounded-xl text-[#6A38C2]">
+                    <div className="p-2.5 bg-indigo-100/80 rounded-xl text-indigo-600">
                         <TrendingUp className="w-5 h-5" />
                     </div>
                     <div>
                         <h3 className="text-base font-bold text-gray-900 flex items-center gap-2">
                             AI Resume & ATS Fit Checker
-                            <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-semibold">
+                            <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full font-semibold">
                                 Powered by Gemini
                             </span>
                         </h3>
@@ -67,7 +67,7 @@ const AiResumeMatchCard = ({ jobId, user }) => {
                         </p>
                         <div className="flex items-center gap-2 mt-2">
                             {user?.profile?.resumeOriginalName ? (
-                                <span className="inline-flex items-center gap-1 text-[11px] font-medium text-purple-700 bg-purple-100/70 px-2 py-0.5 rounded-md">
+                                <span className="inline-flex items-center gap-1 text-[11px] font-medium text-indigo-700 bg-indigo-100/70 px-2 py-0.5 rounded-md">
                                     📄 Resume: {user.profile.resumeOriginalName}
                                 </span>
                             ) : (
@@ -82,7 +82,7 @@ const AiResumeMatchCard = ({ jobId, user }) => {
                 <Button
                     onClick={handleAnalyze}
                     disabled={loading}
-                    className="bg-white hover:bg-purple-50 text-[#6A38C2] border border-purple-200 shadow-xs rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 px-4 py-2"
+                    className="bg-white hover:bg-indigo-50 text-indigo-700 border border-indigo-200 shadow-xs rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 px-4 py-2"
                 >
                     {loading ? (
                         <>
@@ -91,7 +91,7 @@ const AiResumeMatchCard = ({ jobId, user }) => {
                         </>
                     ) : (
                         <>
-                            <Sparkles className="w-4 h-4 text-purple-600" />
+                            <Sparkles className="w-4 h-4 text-indigo-600" />
                             {analysis ? 'Re-Analyze Fit' : 'Check ATS Score'}
                         </>
                     )}
@@ -99,7 +99,7 @@ const AiResumeMatchCard = ({ jobId, user }) => {
             </div>
 
             {analysis && (
-                <div className="mt-6 pt-5 border-t border-purple-100/80 space-y-5 animate-in fade-in duration-300">
+                <div className="mt-6 pt-5 border-t border-indigo-100/80 space-y-5 animate-in fade-in duration-300">
                     {/* Score Bar & Verdict */}
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-xl border border-gray-100 shadow-xs">
                         <div className="flex items-center gap-4">
@@ -124,7 +124,7 @@ const AiResumeMatchCard = ({ jobId, user }) => {
 
                     {/* Summary */}
                     {analysis.summary && (
-                        <p className="text-xs sm:text-sm text-gray-700 leading-relaxed bg-white/70 p-3.5 rounded-xl border border-purple-100/50">
+                        <p className="text-xs sm:text-sm text-gray-700 leading-relaxed bg-white/70 p-3.5 rounded-xl border border-indigo-100/50">
                             {analysis.summary}
                         </p>
                     )}
@@ -172,15 +172,15 @@ const AiResumeMatchCard = ({ jobId, user }) => {
 
                     {/* Recommendations */}
                     {analysis.recommendations?.length > 0 && (
-                        <div className="bg-white p-4 rounded-xl border border-purple-100 space-y-2">
-                            <div className="flex items-center gap-1.5 text-purple-800 font-semibold text-xs">
-                                <Lightbulb className="w-4 h-4 text-purple-600" />
+                        <div className="bg-white p-4 rounded-xl border border-indigo-100 space-y-2">
+                            <div className="flex items-center gap-1.5 text-indigo-800 font-semibold text-xs">
+                                <Lightbulb className="w-4 h-4 text-indigo-600" />
                                 AI Tips to Improve Your Chance of Getting Shortlisted
                             </div>
                             <ul className="space-y-1.5">
                                 {analysis.recommendations.map((tip, idx) => (
                                     <li key={idx} className="text-xs text-gray-600 flex items-start gap-2">
-                                        <span className="text-purple-600 font-bold">•</span>
+                                        <span className="text-indigo-600 font-bold">•</span>
                                         <span>{tip}</span>
                                     </li>
                                 ))}

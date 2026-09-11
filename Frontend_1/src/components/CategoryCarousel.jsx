@@ -30,7 +30,7 @@ const CategoryCarousel = () => {
                             <Button
                                 onClick={() => searchHandler(cat)}
                                 variant="outline"
-                                className="w-full truncate hover:bg-[#6A38C2]/10 hover:text-[#6A38C2] hover:border-[#6A38C2]/30 font-semibold rounded-full text-xs sm:text-sm py-2"
+                                className="w-full truncate hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-300 font-semibold rounded-full text-xs sm:text-sm py-2"
                             >
                                 {cat}
                             </Button>

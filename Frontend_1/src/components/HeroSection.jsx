@@ -29,7 +29,7 @@ const HeroSection = () => {
                     No. 1 Job Hunt Website
                 </span>
                 <h1 className='text-3xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight'>
-                    Search, Apply & <br /> Get Your <span className='text-[#6A38C2]'>Dream Jobs</span>
+                    Search, Apply & <br /> Get Your <span className='text-indigo-600'>Dream Jobs</span>
                 </h1>
                 <p className='text-sm sm:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed'>
                     Explore thousands of job opportunities across top companies. Find the role that fits your career goals and skill set.
@@ -44,7 +44,7 @@ const HeroSection = () => {
                     />
                     <Button
                         onClick={searchHandler}
-                        className="rounded-full bg-[#6A38C2] hover:bg-[#5b30a6] text-white p-2.5 sm:px-4 flex items-center gap-1 shrink-0"
+                        className="rounded-full bg-indigo-600 hover:bg-indigo-700 text-white p-2.5 sm:px-4 flex items-center gap-1 shrink-0"
                     >
                         <Search className='h-4 w-4 sm:h-5 sm:w-5' />
                         <span className='hidden sm:inline text-xs font-medium'>Search</span>

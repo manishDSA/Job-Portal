@@ -85,16 +85,16 @@ const AiJobGeneratorDialog = ({ currentValues, onApplyGeneratedData }) => {
                 <Button
                     type="button"
                     variant="outline"
-                    className="flex items-center gap-2 border-purple-300 text-[#6A38C2] hover:bg-purple-50 hover:text-[#5b30a6] rounded-xl font-medium"
+                    className="flex items-center gap-2 border-indigo-300 text-indigo-700 hover:bg-indigo-50 hover:text-indigo-900 rounded-xl font-medium"
                 >
-                    <Sparkles className="w-4 h-4 text-purple-600 animate-pulse" />
+                    <Sparkles className="w-4 h-4 text-indigo-600 animate-pulse" />
                     Auto-Generate with AI
                 </Button>
             </DialogTrigger>
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl p-6">
                 <DialogHeader>
                     <div className="flex items-center gap-2">
-                        <div className="p-2 bg-purple-100 rounded-xl text-[#6A38C2]">
+                        <div className="p-2 bg-indigo-100 rounded-xl text-indigo-600">
                             <Wand2 className="w-5 h-5" />
                         </div>
                         <DialogTitle className="text-xl font-bold text-gray-900">
@@ -115,7 +115,7 @@ const AiJobGeneratorDialog = ({ currentValues, onApplyGeneratedData }) => {
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 placeholder="e.g. Senior Frontend Developer"
-                                className="w-full mt-1 p-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                className="w-full mt-1 p-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             />
                         </div>
 
@@ -126,7 +126,7 @@ const AiJobGeneratorDialog = ({ currentValues, onApplyGeneratedData }) => {
                                 value={experience}
                                 onChange={(e) => setExperience(e.target.value)}
                                 placeholder="e.g. 2"
-                                className="w-full mt-1 p-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                className="w-full mt-1 p-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             />
                         </div>
 
@@ -137,7 +137,7 @@ const AiJobGeneratorDialog = ({ currentValues, onApplyGeneratedData }) => {
                                 value={location}
                                 onChange={(e) => setLocation(e.target.value)}
                                 placeholder="e.g. Remote / Bangalore"
-                                className="w-full mt-1 p-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                className="w-full mt-1 p-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             />
                         </div>
 
@@ -148,7 +148,7 @@ const AiJobGeneratorDialog = ({ currentValues, onApplyGeneratedData }) => {
                                 value={jobType}
                                 onChange={(e) => setJobType(e.target.value)}
                                 placeholder="e.g. Full-time / Internship"
-                                className="w-full mt-1 p-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                className="w-full mt-1 p-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             />
                         </div>
                     </div>
@@ -157,7 +157,7 @@ const AiJobGeneratorDialog = ({ currentValues, onApplyGeneratedData }) => {
                         type="button"
                         onClick={handleGenerate}
                         disabled={loading || !title}
-                        className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl py-2.5 font-medium hover:opacity-95 shadow-md flex items-center justify-center gap-2"
+                        className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-2.5 font-medium shadow-xs flex items-center justify-center gap-2"
                     >
                         {loading ? (
                             <>
@@ -173,14 +173,14 @@ const AiJobGeneratorDialog = ({ currentValues, onApplyGeneratedData }) => {
                     </Button>
 
                     {generatedResult && (
-                        <div className="mt-4 p-4 bg-purple-50/50 border border-purple-100 rounded-xl space-y-3 animate-in fade-in duration-300">
+                        <div className="mt-4 p-4 bg-indigo-50/50 border border-indigo-100 rounded-xl space-y-3 animate-in fade-in duration-300">
                             <div className="flex items-center justify-between">
-                                <h4 className="font-semibold text-sm text-purple-900 flex items-center gap-1.5">
+                                <h4 className="font-semibold text-sm text-indigo-950 flex items-center gap-1.5">
                                     <CheckCircle2 className="w-4 h-4 text-green-600" />
                                     AI Draft Preview
                                 </h4>
                                 {generatedResult.suggestedSalaryRange && (
-                                    <span className="text-xs font-medium text-purple-700 bg-purple-100 px-2.5 py-1 rounded-full">
+                                    <span className="text-xs font-medium text-indigo-700 bg-indigo-100 px-2.5 py-1 rounded-full">
                                         Suggested Salary: {generatedResult.suggestedSalaryRange}
                                     </span>
                                 )}
@@ -199,7 +199,7 @@ const AiJobGeneratorDialog = ({ currentValues, onApplyGeneratedData }) => {
                                     {generatedResult.requirements?.map((req, idx) => (
                                         <span
                                             key={idx}
-                                            className="text-xs bg-white text-purple-800 border border-purple-200 px-2.5 py-0.5 rounded-md font-medium"
+                                            className="text-xs bg-white text-indigo-800 border border-indigo-200 px-2.5 py-0.5 rounded-md font-medium"
                                         >
                                             {req}
                                         </span>
@@ -223,7 +223,7 @@ const AiJobGeneratorDialog = ({ currentValues, onApplyGeneratedData }) => {
                         type="button"
                         onClick={handleApply}
                         disabled={!generatedResult}
-                        className="bg-[#6A38C2] hover:bg-[#5b30a6] text-white rounded-xl px-5"
+                        className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl px-5"
                     >
                         Apply to Job Form
                     </Button>

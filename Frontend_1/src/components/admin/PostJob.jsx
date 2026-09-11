@@ -93,7 +93,7 @@ const PostJob = () => {
                 value={input.title}
                 onChange={changeEventHandler}
                 placeholder="e.g. Full Stack Developer"
-                className="w-full mt-1.5 p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none"
+                className="w-full mt-1.5 p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
 
@@ -105,14 +105,14 @@ const PostJob = () => {
                 value={input.exprience}
                 onChange={changeEventHandler}
                 placeholder="e.g. 2"
-                className="w-full mt-1.5 p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none"
+                className="w-full mt-1.5 p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
 
             <div className="sm:col-span-2">
               <div className="flex items-center justify-between">
                 <Label className="text-sm font-semibold text-gray-700">Job Description</Label>
-                <span className="text-xs text-purple-600 font-medium flex items-center gap-1">
+                <span className="text-xs text-indigo-600 font-medium flex items-center gap-1">
                   <Sparkles className="w-3 h-3" /> Auto-fillable with AI
                 </span>
               </div>
@@ -122,7 +122,7 @@ const PostJob = () => {
                 value={input.description}
                 onChange={changeEventHandler}
                 placeholder="Describe role, expectations, and day-to-day work..."
-                className="w-full mt-1.5 p-3 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none resize-y"
+                className="w-full mt-1.5 p-3 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none resize-y"
               />
             </div>
 
@@ -134,7 +134,7 @@ const PostJob = () => {
                 value={input.requirements}
                 onChange={changeEventHandler}
                 placeholder="e.g. React.js, Node.js, PostgreSQL, Tailwind CSS"
-                className="w-full mt-1.5 p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none"
+                className="w-full mt-1.5 p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
 
@@ -146,7 +146,7 @@ const PostJob = () => {
                 value={input.salary}
                 onChange={changeEventHandler}
                 placeholder="e.g. 12"
-                className="w-full mt-1.5 p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none"
+                className="w-full mt-1.5 p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
 
@@ -158,7 +158,7 @@ const PostJob = () => {
                 value={input.location}
                 onChange={changeEventHandler}
                 placeholder="e.g. Remote / Bangalore"
-                className="w-full mt-1.5 p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none"
+                className="w-full mt-1.5 p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
 
@@ -170,7 +170,7 @@ const PostJob = () => {
                 value={input.jobType}
                 onChange={changeEventHandler}
                 placeholder="e.g. Full-time / Part-time / Remote"
-                className="w-full mt-1.5 p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none"
+                className="w-full mt-1.5 p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
 
@@ -182,7 +182,7 @@ const PostJob = () => {
                 value={input.position}
                 onChange={changeEventHandler}
                 placeholder="e.g. 2"
-                className="w-full mt-1.5 p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none"
+                className="w-full mt-1.5 p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
 
@@ -223,7 +223,7 @@ const PostJob = () => {
               <Button
                 type="submit"
                 disabled={companies?.length === 0}
-                className="w-full bg-gradient-to-r from-[#6A38C2] to-indigo-600 hover:opacity-95 text-white font-medium py-3 rounded-xl shadow-md"
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-xl shadow-xs"
               >
                 Post Job
               </Button>

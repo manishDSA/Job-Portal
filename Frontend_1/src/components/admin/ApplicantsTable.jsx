@@ -84,7 +84,7 @@ const ApplicantsTable = ({ jobId }) => {
                     <Button
                         onClick={handleRankWithAI}
                         disabled={rankingLoading}
-                        className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:opacity-95 text-white rounded-xl text-xs font-semibold px-4 py-2 flex items-center gap-2 shadow-xs"
+                        className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold px-4 py-2 flex items-center gap-2 shadow-xs"
                     >
                         {rankingLoading ? (
                             <>
@@ -156,13 +156,13 @@ const ApplicantsTable = ({ jobId }) => {
                                                         <Badge className={`text-xs font-bold px-2 py-0.5 border ${getScoreBadgeClass(aiEval.score)}`}>
                                                             {aiEval.score}% - {aiEval.recommendation}
                                                         </Badge>
-                                                        <Info className="w-3.5 h-3.5 text-gray-400 hover:text-purple-600" />
+                                                        <Info className="w-3.5 h-3.5 text-gray-400 hover:text-indigo-600" />
                                                     </button>
                                                 </PopoverTrigger>
-                                                <PopoverContent className="w-72 bg-white p-3.5 shadow-lg rounded-xl border border-purple-100 text-xs space-y-2">
+                                                <PopoverContent className="w-72 bg-white p-3.5 shadow-lg rounded-xl border border-indigo-100 text-xs space-y-2">
                                                     <div className="flex items-center justify-between">
                                                         <span className="font-bold text-gray-900">AI Evaluation</span>
-                                                        <span className="font-bold text-purple-700">{aiEval.score}% Fit</span>
+                                                        <span className="font-bold text-indigo-700">{aiEval.score}% Fit</span>
                                                     </div>
                                                     <p className="text-gray-600 leading-relaxed">{aiEval.evaluationSummary}</p>
                                                     {aiEval.topSkillsMatched?.length > 0 && (
@@ -170,7 +170,7 @@ const ApplicantsTable = ({ jobId }) => {
                                                             <span className="font-semibold text-gray-700 block mb-1">Top Matches:</span>
                                                             <div className="flex flex-wrap gap-1">
                                                                 {aiEval.topSkillsMatched.map((s, idx) => (
-                                                                    <Badge key={idx} variant="secondary" className="text-[10px] bg-purple-50 text-purple-700">
+                                                                    <Badge key={idx} variant="secondary" className="text-[10px] bg-indigo-50 text-indigo-700">
                                                                         {s}
                                                                     </Badge>
                                                                 ))}

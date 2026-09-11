@@ -8,7 +8,7 @@ const LateastJob = () => {
   return (
     <div className='max-w-7xl mx-auto my-16 px-4 sm:px-6 lg:px-8'>
       <h1 className='text-3xl sm:text-4xl font-bold'>
-        <span className='text-[#6A38C2]'>Latest & Top </span> Job Openings
+        <span className='text-indigo-600'>Latest & Top </span> Job Openings
       </h1>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 my-6'>
         {allJobs?.length <= 0 ? (

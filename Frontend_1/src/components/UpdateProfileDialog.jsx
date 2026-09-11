@@ -119,7 +119,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                     <DialogTitle className="text-xl font-bold text-gray-900 flex items-center justify-between">
                         <span>Update Profile</span>
                         {parsingLoading && (
-                            <span className="text-xs text-purple-600 font-normal flex items-center gap-1.5 animate-pulse">
+                            <span className="text-xs text-indigo-600 font-normal flex items-center gap-1.5 animate-pulse">
                                 <Loader2 className="w-3.5 h-3.5 animate-spin" /> AI parsing resume...
                             </span>
                         )}
@@ -128,17 +128,17 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
 
                 <form onSubmit={submitHandler} className="space-y-4 my-2">
                     {/* Resume Upload & AI Auto-fill trigger */}
-                    <div className="p-3.5 bg-gradient-to-br from-purple-50 via-indigo-50 to-white rounded-xl border border-purple-100 space-y-2">
+                    <div className="p-3.5 bg-gradient-to-br from-indigo-50/60 via-slate-50 to-white rounded-xl border border-indigo-100 space-y-2">
                         <div className="flex items-center justify-between">
-                            <Label htmlFor="file" className="text-xs font-bold text-purple-900 flex items-center gap-1.5">
-                                <FileText className="w-4 h-4 text-[#6A38C2]" />
+                            <Label htmlFor="file" className="text-xs font-bold text-indigo-950 flex items-center gap-1.5">
+                                <FileText className="w-4 h-4 text-indigo-600" />
                                 Upload Resume Document
                             </Label>
                             {input.file && !parsingLoading && (
                                 <button
                                     type="button"
                                     onClick={() => parseResumeWithAI()}
-                                    className="text-[11px] font-semibold text-purple-700 hover:text-purple-900 flex items-center gap-1 underline"
+                                    className="text-[11px] font-semibold text-indigo-700 hover:text-indigo-900 flex items-center gap-1 underline"
                                 >
                                     <Sparkles className="w-3 h-3" /> Re-parse with AI
                                 </button>
@@ -150,7 +150,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                             type="file"
                             accept="application/pdf,image/*,.doc,.docx"
                             onChange={fileChangeHandler}
-                            className="bg-white border-purple-200 text-xs rounded-xl cursor-pointer"
+                            className="bg-white border-indigo-200 text-xs rounded-xl cursor-pointer"
                         />
                         <p className="text-[11px] text-gray-500">
                             💡 Upload your PDF resume and Gemini AI will automatically extract your name, bio, and skills!
@@ -207,7 +207,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                 value={input.bio}
                                 onChange={changeEventHandler}
                                 placeholder="Short professional summary..."
-                                className="w-full mt-1 p-2.5 text-xs border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none leading-relaxed"
+                                className="w-full mt-1 p-2.5 text-xs border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none leading-relaxed"
                             />
                         </div>
 
@@ -226,14 +226,14 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
 
                     <DialogFooter className="pt-2">
                         {loading ? (
-                            <Button disabled className="w-full bg-[#6A38C2] text-white rounded-xl text-xs font-semibold py-2.5">
+                            <Button disabled className="w-full bg-indigo-600 text-white rounded-xl text-xs font-semibold py-2.5">
                                 <Loader2 className="w-4 h-4 animate-spin mr-2" />
                                 Saving Profile...
                             </Button>
                         ) : (
                             <Button
                                 type="submit"
-                                className="w-full bg-[#6A38C2] hover:bg-[#5b30a6] text-white rounded-xl text-xs font-semibold py-2.5 shadow-md"
+                                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-semibold py-2.5 shadow-xs"
                             >
                                 Save & Update Profile
                             </Button>

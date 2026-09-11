@@ -95,7 +95,7 @@ const JobDescription = () => {
                                 <Badge className='text-[#F83002] bg-orange-50 hover:bg-orange-100 font-semibold text-xs border border-orange-100'>
                                     {singleJob?.jobType || "Full Time"}
                                 </Badge>
-                                <Badge className='text-[#7209b7] bg-purple-50 hover:bg-purple-100 font-semibold text-xs border border-purple-100'>
+                                <Badge className='text-indigo-700 bg-indigo-50 hover:bg-indigo-100 font-semibold text-xs border border-indigo-100'>
                                     {singleJob?.salary} LPA
                                 </Badge>
                             </div>
@@ -121,7 +121,7 @@ const JobDescription = () => {
                                 className={`px-6 py-2.5 rounded-xl font-medium transition-all ${
                                     isApplied
                                         ? 'bg-gray-400 cursor-not-allowed text-white'
-                                        : 'bg-[#6A38C2] hover:bg-[#5b30a6] text-white shadow-md'
+                                        : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs'
                                 }`}
                             >
                                 {loading ? (
@@ -148,7 +148,7 @@ const JobDescription = () => {
                         
                         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 bg-gray-50/70 p-5 sm:p-6 rounded-2xl border border-gray-100'>
                             <div className='flex items-start gap-3'>
-                                <div className='p-2.5 bg-white rounded-xl shadow-xs text-[#6A38C2]'>
+                                <div className='p-2.5 bg-white rounded-xl shadow-xs text-indigo-600'>
                                     <Briefcase className='w-5 h-5' />
                                 </div>
                                 <div>
@@ -158,7 +158,7 @@ const JobDescription = () => {
                             </div>
 
                             <div className='flex items-start gap-3'>
-                                <div className='p-2.5 bg-white rounded-xl shadow-xs text-[#6A38C2]'>
+                                <div className='p-2.5 bg-white rounded-xl shadow-xs text-indigo-600'>
                                     <MapPin className='w-5 h-5' />
                                 </div>
                                 <div>
@@ -168,7 +168,7 @@ const JobDescription = () => {
                             </div>
 
                             <div className='flex items-start gap-3'>
-                                <div className='p-2.5 bg-white rounded-xl shadow-xs text-[#6A38C2]'>
+                                <div className='p-2.5 bg-white rounded-xl shadow-xs text-indigo-600'>
                                     <DollarSign className='w-5 h-5' />
                                 </div>
                                 <div>
@@ -178,7 +178,7 @@ const JobDescription = () => {
                             </div>
 
                             <div className='flex items-start gap-3'>
-                                <div className='p-2.5 bg-white rounded-xl shadow-xs text-[#6A38C2]'>
+                                <div className='p-2.5 bg-white rounded-xl shadow-xs text-indigo-600'>
                                     <Users className='w-5 h-5' />
                                 </div>
                                 <div>
@@ -188,7 +188,7 @@ const JobDescription = () => {
                             </div>
 
                             <div className='flex items-start gap-3'>
-                                <div className='p-2.5 bg-white rounded-xl shadow-xs text-[#6A38C2]'>
+                                <div className='p-2.5 bg-white rounded-xl shadow-xs text-indigo-600'>
                                     <Calendar className='w-5 h-5' />
                                 </div>
                                 <div>
@@ -200,7 +200,7 @@ const JobDescription = () => {
                             </div>
 
                             <div className='flex items-start gap-3'>
-                                <div className='p-2.5 bg-white rounded-xl shadow-xs text-[#6A38C2]'>
+                                <div className='p-2.5 bg-white rounded-xl shadow-xs text-indigo-600'>
                                     <Briefcase className='w-5 h-5' />
                                 </div>
                                 <div>
