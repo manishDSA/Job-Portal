@@ -198,3 +198,53 @@ export const updateProfile = async (req, res) => {
         });
     }
 };
+
+export const socialLogin = async (req, res) => {
+    try {
+        const { fullname, email, profilePhoto, role, provider } = req.body;
+        if (!email || !role) {
+            return res.status(400).json({
+                message: "Email and role selection are required for social login.",
+                success: false
+            });
+        }
+
+        let user = await prisma.user.findUnique({
+            where: { email }
+        });
+
+        if (!user) {
+            const randomPassword = await bcrypt.hash(Math.random().toString(36).slice(-10), 10);
+            user = await prisma.user.create({
+                data: {
+                    fullname: fullname || email.split('@')[0],
+                    email,
+                    phoneNumber: "",
+                    password: randomPassword,
+                    role: role.toLowerCase(),
+                    profilePhoto: profilePhoto || ""
+                }
+            });
+        }
+
+        const tokenData = {
+            userId: user.id
+        };
+        const token = jwt.sign(tokenData, process.env.SECRET_KEY || "jobportal_secret", { expiresIn: '1d' });
+
+        return res
+            .status(200)
+            .cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'strict' })
+            .json({
+                message: `Successfully authenticated via ${provider || 'Social Login'}. Welcome ${user.fullname}!`,
+                user: formatUser(user),
+                success: true
+            });
+    } catch (error) {
+        console.error("Social Login Error:", error);
+        return res.status(500).json({
+            message: "Internal server error during social login",
+            success: false
+        });
+    }
+};
